@@ -5,7 +5,7 @@ const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
 const publicPath = path.join(__dirname, '../public');
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 8080;
 var app = express();
 
 //http server is created by express and do same thing but to make socketIO to work
@@ -18,10 +18,28 @@ var io = socketIO(server);
 io.on('connection', (socket) => {
     console.log('new user connected');
 
-    socket.on('disconnect', () => {
-        console.log('‘User was disconnected');
+    // socket.emit('newEmail', { // emit creating events
+    //     from: 'keshta95@hotmail.com',
+    //     text: 'Hey what is going on',
+    //     creatAt: 123
+    // }); 
+    socket.emit('newMessage', {
+        from:'magdy@gmail.com',
+        text:'Hello from server',
+        createdAt: Date()
     });
-});
+
+    // socket.on('createEmail', (newEmail) => { //listener for event
+    //     console.log('createEmail', newEmail);
+    // });
+
+    socket.on('createMessage', (message) => {
+        console.log('createMessage', message);
+    });
+    socket.on('disconnect', () => {
+        console.log('User was disconnected');
+    });
+}); 
 app.use(express.static(publicPath));
 
 server.listen(port, (e) => {
