@@ -47,6 +47,6 @@ io.on('connection', (socket) => {
 }); 
 app.use(express.static(publicPath));
 
-server.listen(port,'127.0.0.1', (e) => {
+server.listen(port, (e) => {
     console.log(`Server is up on port ${port}`);
 });
