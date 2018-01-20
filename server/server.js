@@ -23,11 +23,11 @@ io.on('connection', (socket) => {
     //     text: 'Hey what is going on',
     //     creatAt: 123
     // }); 
-    socket.emit('newMessage', {
-        from:'magdy@gmail.com',
-        text:'Hello from server',
-        createdAt: Date()
-    });
+    // socket.emit('newMessage', {
+    //     from:'magdy@gmail.com',
+    //     text:'Hello from server',
+    //     createdAt: Date()
+    // });
 
     // socket.on('createEmail', (newEmail) => { //listener for event
     //     console.log('createEmail', newEmail);
@@ -35,6 +35,11 @@ io.on('connection', (socket) => {
 
     socket.on('createMessage', (message) => {
         console.log('createMessage', message);
+        io.emit('newMessage', {
+         from: message.from,
+         text: message.text,
+         createdAt: new Date().getTime()
+        });
     });
     socket.on('disconnect', () => {
         console.log('User was disconnected');
@@ -42,6 +47,6 @@ io.on('connection', (socket) => {
 }); 
 app.use(express.static(publicPath));
 
-server.listen(port, (e) => {
+server.listen(port,'127.0.0.1', (e) => {
     console.log(`Server is up on port ${port}`);
 });

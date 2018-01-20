@@ -11,10 +11,10 @@ socket.on('connect', function () {
     //     text: 'Saying Hello From server',
     //     createdAt: Date()
     // });
-    socket.emit('createMessage', {
-     from: 'Ibrahim',
-     text: 'yupp'
-    });
+    // socket.emit('createMessage', {
+    //  from: 'Ibrahim',
+    //  text: 'yupp'
+    // });
 });
 
 socket.on('disconnect', function () {
@@ -25,5 +25,5 @@ socket.on('disconnect', function () {
 //     console.log('new email',email);
 // });
 socket.on('newMessage', function(message) {
-    console.log('message created', message);
+    console.log('newMessage', message);
 })
