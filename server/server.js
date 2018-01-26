@@ -1,6 +1,6 @@
 const path = require('path');
 const http = require('http');
-const generateMessage = require('./utils/message');
+const {generateMessage, generateLocationMessage} = require('./utils/message');
 // express 
 const express = require('express');
 const socketIO = require('socket.io');
@@ -51,12 +51,15 @@ io.on('connection', (socket) => {
         // });
     });
 
+    socket.on('createLocationMessage', (coords) => { 
+        io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
+    });
     socket.on('disconnect', () => {
         console.log('User was disconnected');
     });
 }); 
 app.use(express.static(publicPath));
 
-server.listen(port, (e) => {
+server.listen(port,  (e) => {
     console.log(`Server is up on port ${port}`);
 });
